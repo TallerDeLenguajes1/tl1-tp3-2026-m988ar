@@ -43,6 +43,15 @@ int main(){
         strcpy(clientesArreglo[i].NombreCliente, buff);
         clientesArreglo[i].CantidadProductosAPedir = (rand() % 5) + 1;
         clientesArreglo[i].Productos =(Producto *) malloc(clientesArreglo[i].CantidadProductosAPedir * sizeof(Producto));
+        //Carga de productos
+        for (int j = 0; j < clientesArreglo[i].CantidadProductosAPedir; j++)
+        {
+            clientesArreglo[i].Productos->ProductoID = j;
+            clientesArreglo[i].Productos->Cantidad = (rand()%10) + 1;
+            clientesArreglo[i].Productos->TipoProducto = TiposProductos[rand()%5];
+            clientesArreglo[i].Productos->PrecioUnitario = (rand()%(100 - 10 + 1) + 10);
+        }
+        
     }
     
     
