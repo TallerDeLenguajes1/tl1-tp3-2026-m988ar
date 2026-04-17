@@ -14,7 +14,7 @@ int main(){
         printf("Ingrese el nombre:");
         gets(buff);
         //El "+1 es por el enter o caracter nulo al final del gets"
-        *nombres[i] = (char *) malloc(strlen(buff)*sizeof(char) + 1);
-        strcpy(*nombres[i], buff);
+        nombres[i] = (char *) malloc(strlen(buff)*sizeof(char) + 1);
+        strcpy(nombres[i], buff);
     }
 }
