@@ -20,7 +20,8 @@ Producto *Productos; //El tamaño de este arreglo depende de la variable
  // “CantidadProductosAPedir”
 }Cliente;
 
-float calcularCostoTotal(Producto *Productos);
+float calcularCostoProducto(Producto *Productos);
+void mostrarClientes(Cliente *clientes, int cant);
 
 
 int main(){
@@ -49,14 +50,13 @@ int main(){
         //Carga de productos
         for (int j = 0; j < clientesArreglo[i].CantidadProductosAPedir; j++)
         {
-            clientesArreglo[i].Productos->ProductoID = j;
-            clientesArreglo[i].Productos->Cantidad = (rand()%10) + 1;
-            clientesArreglo[i].Productos->TipoProducto = TiposProductos[rand()%5];
-            clientesArreglo[i].Productos->PrecioUnitario = (rand()%(100 - 10 + 1) + 10);
-            calcularCostoTotal(clientesArreglo[i].Productos);
+            clientesArreglo[i].Productos[j].ProductoID = j;
+            clientesArreglo[i].Productos[j].Cantidad = (rand()%10) + 1;
+            clientesArreglo[i].Productos[j].TipoProducto = TiposProductos[rand()%5];
+            clientesArreglo[i].Productos[j].PrecioUnitario = (rand()%(100 - 10 + 1) + 10);
         }
     }
-    
+    mostrarClientes(clientesArreglo, cantClientes);
     
     //Libero la memoria reservada
     for (int i = 0; i < cantClientes; i++)
@@ -67,7 +67,28 @@ int main(){
     free (clientesArreglo);
 }
 
-float calcularCostoTotal(Producto *Productos){
+void mostrarClientes(Cliente *clientes, int cant){
+
+    for (int i = 0; i < cant; i++)
+    {
+        float precioTotal = 0;
+        //Mostrar datos del/el cliente/s
+        printf("\n--------------------------\n\nNombre del cliente: %s\nId: %d\n",clientes[i].NombreCliente, clientes[i].ClienteID);
+        printf("Cantidad de Productos a pedir: %d\n", clientes[i].CantidadProductosAPedir);
+        for (int j = 0; j < clientes[i].CantidadProductosAPedir; j++)
+        {
+            //Mostrar datos del o los productos de cada cliente
+            printf("----PRODUCTOS----\n--Producto: %s--\n",clientes[i].Productos[j].TipoProducto);
+            printf("Id del producto: %d\nCantidad pedida:%d\n", clientes[i].Productos[j].ProductoID, clientes[i].Productos[j].Cantidad);
+            printf("Precio unitario del producto:%f\n", clientes[i].Productos[j].PrecioUnitario);
+            precioTotal += calcularCostoProducto(clientes[i].Productos);
+        }
+        printf("TOTAL A PAGAR: $%f", precioTotal);
+    }
+    
+}
+
+float calcularCostoProducto(Producto *Productos){
     float total = Productos->Cantidad * Productos->PrecioUnitario;
     return total;
 }
