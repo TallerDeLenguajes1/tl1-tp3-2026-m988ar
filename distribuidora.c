@@ -25,9 +25,32 @@ int main(){
     int cantClientes;
     char *TiposProductos[]={"Galletas","Snack","Cigarrillos","Caramelos","Bebidas"};
     Cliente *clientesArreglo;
+    char buff[MAX];
 
     printf("-------MENU-------\n\n\nIngrese la cantidad de clientes:");
+    //Reserva de memoria para la cantidad de clientes
     scanf("%d", &cantClientes);
+    while (getchar() != '\n');
     clientesArreglo =(Cliente *) malloc(cantClientes * sizeof(Cliente));
+    printf("\nIngrese el nombre de los clientes\n");
+    //Reserva de memoria para los datos del cliente
+    for (int i = 0; i < cantClientes; i++)
+    {
+        clientesArreglo[i].ClienteID = i;
+        fgets(buff, sizeof(buff), stdin);
+        buff[strcspn(buff, "\n")] = '\0';
+        clientesArreglo[i].NombreCliente = (char *)malloc(strlen(buff) * sizeof(char) + 1);
+        strcpy(clientesArreglo[i].NombreCliente, buff);
+        clientesArreglo[i].CantidadProductosAPedir = (rand() % 5) + 1;
+        clientesArreglo[i].Productos =(Producto *) malloc(clientesArreglo[i].CantidadProductosAPedir * sizeof(Producto));
+    }
     
+    
+    //Libero la memoria reservada
+    for (int i = 0; i < cantClientes; i++)
+    {
+        free(clientesArreglo[i].NombreCliente);
+        free(clientesArreglo[i].Productos);
+    }
+    free (clientesArreglo);
 }
