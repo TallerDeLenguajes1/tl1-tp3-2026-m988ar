@@ -5,6 +5,8 @@
 #define MAX 150
 #define NOMBRES 5
 
+void mostrarPersonas(char **nombres);
+
 int main(){
     char buff [MAX];
     char *nombres [NOMBRES];
@@ -16,5 +18,16 @@ int main(){
         //El "+1 es por el enter o caracter nulo al final del gets"
         nombres[i] = (char *) malloc(strlen(buff)*sizeof(char) + 1);
         strcpy(nombres[i], buff);
+    }
+
+    mostrarPersonas(nombres);
+
+    return 0;
+}
+
+void mostrarPersonas(char **nombres){
+    for (int i = 0 ; i < NOMBRES; i++)
+    {
+        printf("\n%s\n",nombres[i]);
     }
 }
