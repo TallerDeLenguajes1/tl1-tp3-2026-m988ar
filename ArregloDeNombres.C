@@ -6,13 +6,16 @@
 #define NOMBRES 5
 
 void mostrarPersonas(char **nombres);
-int buscarNombre(char **nombres, char *clave);
+int buscarNombrePalabra(char **nombres, char *clave);
+
+void buscarNombreId(char **nombres, int id);
 
 int main(){
     char buff [MAX];
     char clave [MAX];
     char *nombres [NOMBRES];
     int idPalabraClave;
+    int id;
 
     for (int i = 0; i < 5; i++)
     {
@@ -25,18 +28,29 @@ int main(){
 
     mostrarPersonas(nombres);
 
-    printf("\nIngrese la paabra clave para buscar el nombre:\n");
-    gets(clave);
+    printf("Ingrese el ID que quiere buscar: ");
+    scanf("%d", &id);
+    buscarNombreId(nombres, id);
 
-    if ((idPalabraClave = buscarNombre(nombres, clave)) >= 0)
+    printf("\nIngrese la paabra clave para buscar el nombre:\n");
+    while (getchar() != '\n');
+    fgets(clave, sizeof(clave), stdin);
+    clave[strcspn(clave, "\n")] = '\0';
+
+    if ((idPalabraClave = buscarNombrePalabra(nombres, clave)) >= 0)
     {
         printf("\nEl nombre que coincide es %s\n", nombres[idPalabraClave]);
     }
     else
     {
-        printf("\nNo hay nombres que coincidadn con la palabra clave\n");
+        printf("\nNo hay nombres que coincidan con la palabra clave\n");
     }
-    
+
+    //Libero memoria
+    for (int i = 0; i < NOMBRES; i++)
+    {
+        free(nombres[i]);
+    }
 
     return 0;
 }
@@ -48,7 +62,19 @@ void mostrarPersonas(char **nombres){
     }
 }
 
-int buscarNombre(char **nombres, char *clave){
+void buscarNombreId(char **nombres, int id){
+    for (int i = 0; i < NOMBRES; i++)
+    {
+        if (i == id)
+        {
+            printf("\nEl nombre de id %d es: %s\n",id, nombres[i]);
+            return ;
+        }
+    }
+    printf("\nNo se encontro el valor buscado\n");
+}
+
+int buscarNombrePalabra(char **nombres, char *clave){
     
     for (int i = 0; i < NOMBRES; i++)
     {
