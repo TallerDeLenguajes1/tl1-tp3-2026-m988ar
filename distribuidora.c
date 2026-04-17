@@ -4,6 +4,7 @@
 #include <time.h>
 
 #define MAX 150
+
 typedef struct{
  int ProductoID; //Numerado en ciclo iterativo
  int Cantidad; // entre 1 y 10
@@ -18,6 +19,8 @@ int CantidadProductosAPedir; // (aleatorio entre 1 y 5)
 Producto *Productos; //El tamaño de este arreglo depende de la variable
  // “CantidadProductosAPedir”
 }Cliente;
+
+float calcularCostoTotal(Producto *Productos);
 
 
 int main(){
@@ -50,8 +53,8 @@ int main(){
             clientesArreglo[i].Productos->Cantidad = (rand()%10) + 1;
             clientesArreglo[i].Productos->TipoProducto = TiposProductos[rand()%5];
             clientesArreglo[i].Productos->PrecioUnitario = (rand()%(100 - 10 + 1) + 10);
+            calcularCostoTotal(clientesArreglo[i].Productos);
         }
-        
     }
     
     
@@ -62,4 +65,9 @@ int main(){
         free(clientesArreglo[i].Productos);
     }
     free (clientesArreglo);
+}
+
+float calcularCostoTotal(Producto *Productos){
+    float total = Productos->Cantidad * Productos->PrecioUnitario;
+    return total;
 }
